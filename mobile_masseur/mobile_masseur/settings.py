@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'frontend',
-    'phonenumber_field'
+    'phonenumber_field',
+    'massage'
 ]
 
 MIDDLEWARE = [
