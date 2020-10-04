@@ -1,0 +1,54 @@
+:root {
+    --main-color:rgb(15, 20, 97);
+  }
+
+.nav-bar {
+      margin: 0 auto;
+      padding: 0 40px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      background: white;
+  }
+
+.brand-logo {
+    width: 100px;
+    height: 100px;
+    background: cornflowerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    font-size: 2em;
+}
+
+.nav-bar ul {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    color: var(--main-color);
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--main-color);
+  }
+
+.nav-link {
+    transition: transform .2s ease-in-out;
+}
+
+.nav-link:hover {
+    transform: scale(1.2);
+}
