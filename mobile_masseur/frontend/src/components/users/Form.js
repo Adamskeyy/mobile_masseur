@@ -21,6 +21,11 @@ export class Form extends Component {
         const { name, email, message } = this.state;
         const user = { name, email, message };
         this.props.addUser(user);
+        this.setState({
+            name: '',
+            email: '',
+            message: ''
+        });
     }
 
     render() {

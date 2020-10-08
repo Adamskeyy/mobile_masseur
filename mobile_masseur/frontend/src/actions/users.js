@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { createMessage } from './messages';
 
-import { GET_USERS, DELETE_USER, ADD_USER } from './types';
+import { GET_USERS, DELETE_USER, ADD_USER, GET_ERRORS } from './types';
 
 // GET USERS
 export const getUsers = () => dispatch => {
@@ -18,6 +19,7 @@ export const getUsers = () => dispatch => {
 export const deleteUser = (id) => dispatch => {
     axios.delete(`/api/users/${id}/`)
         .then(res => {
+            dispatch(createMessage({ deleteUser: 'User Deleted' }));
             dispatch({
                 type: DELETE_USER,
                 payload: id
@@ -30,10 +32,20 @@ export const deleteUser = (id) => dispatch => {
 export const addUser = (user) => dispatch => {
     axios.post('/api/users/', user)
         .then(res => {
+            dispatch(createMessage({ addUser: 'User Added' }));
             dispatch({
                 type: ADD_USER,
                 payload: res.data
             });
         })
-        .catch(err => console.log(err));
-}
+        .catch(err => {
+            const errors = {
+                msg: err.response.data,
+                status: err.response.status
+            };
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            });
+        });
+};
