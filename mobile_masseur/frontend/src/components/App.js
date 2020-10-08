@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Header from './layout/Header';
+import Navigation from './layout/Navigation/Navigation';
+import Footer from './layout/Footer/Footer';
+import Tiles from './layout/Tiles/Tiles';
+import Prices from './layout/Prices/Prices';
+import About from './layout/About/About';
 import './App.css';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 class App extends Component {
     render() {
         return (
-            <div id="main">
-                <Header />
-                <main>
-                    <div className="content">
-                        <h1>Witaj wędrowcze</h1>
-                    </div>
-                </main>
-            </div>
+            <BrowserRouter>
+                <div id="main">
+                    <Navigation />
+                    <Route exact path="/" component={Tiles} />
+                    <Route path="/prices" component={Prices} />
+                    <Route path="/about" component={About} />
+                    <Footer />
+                </div>
+            </BrowserRouter>
         )
     }
 }
