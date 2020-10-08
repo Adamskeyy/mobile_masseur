@@ -2,6 +2,7 @@ import React from 'react';
 import Wrapper from '../../../hoc/Wrapper';
 import './Tiles.css';
 import wave from './wave.jpg';
+import img1 from '../../../images/img1.jpg';
 
 const Tiles = () => {
 
@@ -11,7 +12,7 @@ const Tiles = () => {
                 <h1>Mobliny Masażysta Trójmiasto</h1>
             </div>
             <div className="img-conatiner">
-                <img src={wave} alt="Placeholder alt" />
+                <img src={img1} alt="Placeholder alt" />
             </div>
             <div className="tiles-grid">
                 <div className="service service1"><a className="tile-link" href="#">Usługa 1</a></div>
