@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { createMessage, returnErrors } from './messages';
+import { tokenConfig } from './auth';
 
 import { GET_PERSONS, DELETE_PERSON, ADD_PERSON } from './types';
 
 // GET PERSONS
-export const getPersons = () => dispatch => {
-    axios.get('/api/persons/')
+export const getPersons = () => (dispatch, getState) => {
+    axios.get('/api/persons/', tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_PERSONS,
@@ -16,8 +17,8 @@ export const getPersons = () => dispatch => {
 }
 
 // DELETE PERSON
-export const deletePerson = (id) => dispatch => {
-    axios.delete(`/api/persons/${id}/`)
+export const deletePerson = (id) => (dispatch, getState) => {
+    axios.delete(`/api/persons/${id}/`, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({ deletePerson: 'Person Deleted' }));
             dispatch({
@@ -29,8 +30,8 @@ export const deletePerson = (id) => dispatch => {
 }
 
 // ADD PERSON
-export const addPerson = (person) => dispatch => {
-    axios.post('/api/persons/', person)
+export const addPerson = (person) => (dispatch, getState) => {
+    axios.post('/api/persons/', person, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({ addPerson: 'Person Added' }));
             dispatch({

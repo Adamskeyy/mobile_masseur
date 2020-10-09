@@ -16,10 +16,12 @@ class Alerts extends Component {
             if (error.msg.email) alert.error(`Email: ${error.msg.email.join()}`);
             if (error.msg.message) alert.error(`Message: ${error.msg.message.join()}`);
             if (error.msg.non_field_errors) alert.error('Niepoprawne dane logowania');
+            if (error.msg.username) alert.error('Użytkownik o takiej nazwie już istnieje!');
         };
         if (message !== prevProps.message) {
             if (message.deletePerson) alert.success(message.deletePerson);
             if (message.addPerson) alert.success(message.addPerson);
+            if (message.passwordsNotMatch) alert.error(message.passwordsNotMatch);
         }
     }
 

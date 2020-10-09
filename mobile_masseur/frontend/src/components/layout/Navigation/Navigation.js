@@ -15,7 +15,14 @@ class Navigation extends Component {
         const { isAuthenticated, user } = this.props.auth;
 
         const authLinks = (
-            <li className="nav-link"><button onClick={this.props.logout} className="nav-link btn btn-outline-primary btn-sm">Wyloguj</button></li>
+            <>
+                <span className="navbar-text ml-1">
+                    <strong>
+                        {user ? `Welcome, ${user.username}` : ''}
+                    </strong>
+                </span>
+                <li className="nav-link"><button onClick={this.props.logout} className="nav-link btn btn-outline-primary btn-sm">Wyloguj</button></li>
+            </>
         );
 
         const guestLinks = (
