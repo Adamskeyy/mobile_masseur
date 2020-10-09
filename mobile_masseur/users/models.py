@@ -9,11 +9,10 @@ from django.contrib.auth.models import AbstractUser as DjangoUser
 
 
 class User(DjangoUser):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     phone = PhoneNumberField(default='+48000000000')
     points = models.IntegerField(default=0)
     is_blocked = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
 
     def get_massage_history(self):
         pass
@@ -22,8 +21,8 @@ class User(DjangoUser):
         pass
 
     class Meta:
-        unique_together = ('username', 'phone')
+        unique_together = ('username', 'email')
         ordering = ('username',)
 
     def __str__(self):
-        return f"{self.name} email: {self.email}"
+        return f"{self.username} email: {self.email}"
