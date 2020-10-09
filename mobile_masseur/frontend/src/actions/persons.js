@@ -1,40 +1,40 @@
 import axios from 'axios';
 import { createMessage } from './messages';
 
-import { GET_USERS, DELETE_USER, ADD_USER, GET_ERRORS } from './types';
+import { GET_PERSONS, DELETE_PERSON, ADD_PERSON, GET_ERRORS } from './types';
 
-// GET USERS
-export const getUsers = () => dispatch => {
-    axios.get('/api/users/')
+// GET PERSONS
+export const getPersons = () => dispatch => {
+    axios.get('/api/persons/')
         .then(res => {
             dispatch({
-                type: GET_USERS,
+                type: GET_PERSONS,
                 payload: res.data
             });
         })
         .catch(err => console.log(err));
 }
 
-// DELETE USER
-export const deleteUser = (id) => dispatch => {
-    axios.delete(`/api/users/${id}/`)
+// DELETE PERSON
+export const deletePerson = (id) => dispatch => {
+    axios.delete(`/api/persons/${id}/`)
         .then(res => {
-            dispatch(createMessage({ deleteUser: 'User Deleted' }));
+            dispatch(createMessage({ deletePerson: 'Person Deleted' }));
             dispatch({
-                type: DELETE_USER,
+                type: DELETE_PERSON,
                 payload: id
             });
         })
         .catch(err => console.log(err));
 }
 
-// ADD USER
-export const addUser = (user) => dispatch => {
-    axios.post('/api/users/', user)
+// ADD PERSON
+export const addPerson = (person) => dispatch => {
+    axios.post('/api/persons/', person)
         .then(res => {
-            dispatch(createMessage({ addUser: 'User Added' }));
+            dispatch(createMessage({ addPerson: 'Person Added' }));
             dispatch({
-                type: ADD_USER,
+                type: ADD_PERSON,
                 payload: res.data
             });
         })

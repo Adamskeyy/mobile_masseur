@@ -1,23 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUsers, deleteUser } from '../../actions/users';
+import { getPersons, deletePerson } from '../../actions/persons';
 
-export class Users extends Component {
+export class Persons extends Component {
     static propTypes = {
-        users: PropTypes.array.isRequired,
-        getUsers: PropTypes.func.isRequired,
-        deleteUser: PropTypes.func.isRequired
+        persons: PropTypes.array.isRequired,
+        getPersons: PropTypes.func.isRequired,
+        deletePerson: PropTypes.func.isRequired
     };
 
     componentDidMount() {
-        this.props.getUsers();
+        this.props.getPersons();
     }
 
     render() {
         return (
             <Fragment>
-                <h2>Users</h2>
+                <h2>Persons</h2>
                 <div className="container">
                     <table className="table table-striped">
                         <thead>
@@ -30,13 +30,13 @@ export class Users extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.users.map(user => (
-                                <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.message}</td>
-                                    <td><button onClick={this.props.deleteUser.bind(this, user.id)} className="btn btn-danger btn-sm">Delete</button></td>
+                            {this.props.persons.map(person => (
+                                <tr key={person.id}>
+                                    <td>{person.id}</td>
+                                    <td>{person.name}</td>
+                                    <td>{person.email}</td>
+                                    <td>{person.message}</td>
+                                    <td><button onClick={this.props.deletePerson.bind(this, person.id)} className="btn btn-danger btn-sm">Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -48,7 +48,7 @@ export class Users extends Component {
 }
 
 const mapStateToProps = state => ({
-    users: state.users.users
+    persons: state.persons.persons
 });
 
-export default connect(mapStateToProps, { getUsers, deleteUser })(Users);
+export default connect(mapStateToProps, { getPersons, deletePerson })(Persons);

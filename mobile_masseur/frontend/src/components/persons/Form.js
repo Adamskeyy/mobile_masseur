@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addUser } from '../../actions/users';
+import { addPerson } from '../../actions/persons';
 
 export class Form extends Component {
     state = {
@@ -11,7 +11,7 @@ export class Form extends Component {
     }
 
     static propTypes = {
-        addUser: PropTypes.func.isRequired
+        addPerson: PropTypes.func.isRequired
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -19,8 +19,8 @@ export class Form extends Component {
     onSubmit = e => {
         e.preventDefault();
         const { name, email, message } = this.state;
-        const user = { name, email, message };
-        this.props.addUser(user);
+        const person = { name, email, message };
+        this.props.addPerson(person);
         this.setState({
             name: '',
             email: '',
@@ -33,7 +33,7 @@ export class Form extends Component {
         return (
             <div className="container">
                 <div className="card card-body mt-4 mb-4">
-                    <h2>Add User</h2>
+                    <h2>Add Person</h2>
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <label>Name</label>
@@ -77,4 +77,4 @@ export class Form extends Component {
     }
 }
 
-export default connect(null, { addUser })(Form);
+export default connect(null, { addPerson })(Form);

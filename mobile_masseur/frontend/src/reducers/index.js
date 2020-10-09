@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import users from './users';
+import persons from './persons';
 import errors from './errors';
 import messages from './messages';
 
 export default combineReducers({
-    users,
+    persons,
     errors,
     messages
 });

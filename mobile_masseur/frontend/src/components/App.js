@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import Navigation from './layout/Navigation/Navigation';
-import Dashboard from './users/Dashboard';
+import Dashboard from './persons/Dashboard';
 import Alerts from './layout/Alerts';
 import Footer from './layout/Footer/Footer';
 import Tiles from './layout/Tiles/Tiles';

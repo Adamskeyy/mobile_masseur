@@ -17,8 +17,8 @@ class Alerts extends Component {
             if (error.msg.message) alert.error(`Message: ${error.msg.message.join()}`);
         };
         if (message !== prevProps.message) {
-            if (message.deleteUser) alert.success(message.deleteUser);
-            if (message.addUser) alert.success(message.addUser);
+            if (message.deletePerson) alert.success(message.deletePerson);
+            if (message.addPerson) alert.success(message.addPerson);
         }
     }
 
