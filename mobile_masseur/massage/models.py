@@ -1,6 +1,8 @@
 from django.db import models
 from model_utils import Choices
 
+from users.models import User
+
 
 class MassageDateTime(models.Model):
     day = models.DateField()
@@ -38,18 +40,28 @@ class MassageService(models.Model):
     massage_date_time = models.CharField(
         max_length=200,
         choices=[(str(free_date), str(free_date)) for free_date in MassageDateTime.objects.all()],
-        default="-"
     )
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, blank=True, null=True)
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user',
+        null=True,
+    )
 
     class Meta:
-        unique_together = ('massage_date_time',)
         ordering = ('massage_date_time',)
 
     def total_cost(self):
         return self.massage_type.cost + self.massage_delivery.cost
 
+    def get_all_history(self):
+        pass
+
+    def get_massage_plan(self):
+        pass
+
     def __str__(self):
-        return f"{self.massage_type} / {self.massage_date} / {self.total_cost()} zł"
+        return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost()} zł"
