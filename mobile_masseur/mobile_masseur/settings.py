@@ -50,6 +50,7 @@ REST_FRAMEWORK = {
          ('knox.auth.TokenAuthentication',)
 }
 
+AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

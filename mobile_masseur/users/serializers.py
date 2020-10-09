@@ -24,3 +24,5 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['password'],
         )
         return user
+
+# Login Serializer

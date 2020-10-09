@@ -1,6 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import AbstractBaseUser as DjangoUser
+from django.contrib.auth.models import AbstractUser as DjangoUser
 
 
 # class Admin(models.Model):
@@ -9,8 +9,6 @@ from django.contrib.auth.models import AbstractBaseUser as DjangoUser
 
 
 class User(DjangoUser):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     phone = PhoneNumberField(default='+48000000000')
     points = models.IntegerField(default=0)
@@ -24,8 +22,8 @@ class User(DjangoUser):
         pass
 
     class Meta:
-        unique_together = ('name', 'phone')
-        ordering = ('name',)
+        unique_together = ('username', 'phone')
+        ordering = ('username',)
 
     def __str__(self):
         return f"{self.name} email: {self.email}"

@@ -1,17 +1,25 @@
 # from users.models import User
-from rest_framework import viewsets, permissions
-from .serializers import UserSerializer
+from rest_framework import permissions, generics
+from .serializers import UserSerializer, RegisterSerializer
+from knox.models import AuthToken
+from rest_framework.response import Response
 
 
-# User Viewset
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
-    serializer_class = UserSerializer
+# Register API
 
-    def get_queryset(self):
-        return self.request.user.all()
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user,
+                                   context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)
+        })
+
+# Login API
+
+#  Get User API

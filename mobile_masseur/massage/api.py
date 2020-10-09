@@ -1,15 +1,20 @@
-from massage.models import MassageService, MassageType, MassageDelivery, MassageDateTime
+from .models import MassageService, MassageType, MassageDelivery, MassageDateTime
 from rest_framework import viewsets, permissions
 from .serializers import MassageServiceSerializer, MassageTypeSerializer, MassageDeliverySerializer, \
     MassageDateTimeSerializer
 
 
 class MassageServiceViewSet(viewsets.ModelViewSet):
-    queryset = MassageService.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = MassageServiceSerializer
+
+    def get_queryset(self):
+        return self.request.user.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class MassageTypeViewSet(viewsets.ModelViewSet):
