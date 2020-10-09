@@ -2,16 +2,21 @@ from django.db import models
 from model_utils import Choices
 
 from users.models import User
+
+
 # from django.contrib.auth.models import User
 
 
 class MassageDateTime(models.Model):
-    day = models.DateField()
-    hour = models.TimeField()
+    date_time = models.DateTimeField()
     is_free = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.day} - {self.hour}"
+        if self.is_free:
+            availability = "termin dostępny"
+        else:
+            availability = "termin niedostępny"
+        return f"{self.date_time} - {availability}"
 
 
 class MassageDelivery(models.Model):
@@ -38,10 +43,7 @@ class MassageType(models.Model):
 
 class MassageService(models.Model):
     massage_type = models.ForeignKey(MassageType, on_delete=models.DO_NOTHING, null=True)
-    massage_date_time = models.CharField(
-        max_length=200,
-        choices=[(str(free_date), str(free_date)) for free_date in MassageDateTime.objects.all()],
-    )
+    massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING, null=True)
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
