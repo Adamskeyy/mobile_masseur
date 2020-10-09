@@ -5,8 +5,14 @@ from .serializers import PersonSerializer
 
 # Person Viewset
 class PersonViewSet(viewsets.ModelViewSet):
-    queryset = Person.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
+
     serializer_class = PersonSerializer
+
+    def get_queryset(self):
+        return self.request.user.persons.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
