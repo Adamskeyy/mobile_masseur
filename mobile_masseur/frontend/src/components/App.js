@@ -38,7 +38,7 @@ class App extends Component {
                             <Navigation />
                             <Alerts />
                             <Switch>
-                                <PrivateRoute exact path='/' component={Tiles} />
+                                <Route exact path='/' component={Tiles} />
                                 <Route exact path='/register' component={Register} />
                                 <Route exact path='/login' component={Login} />
                                 <Route exact path='/dashboard' component={Dashboard} />

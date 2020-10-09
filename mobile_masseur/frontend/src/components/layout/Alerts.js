@@ -15,6 +15,7 @@ class Alerts extends Component {
             if (error.msg.name) alert.error(`Name: ${error.msg.name.join()}`);
             if (error.msg.email) alert.error(`Email: ${error.msg.email.join()}`);
             if (error.msg.message) alert.error(`Message: ${error.msg.message.join()}`);
+            if (error.msg.non_field_errors) alert.error('Niepoprawne dane logowania');
         };
         if (message !== prevProps.message) {
             if (message.deletePerson) alert.success(message.deletePerson);

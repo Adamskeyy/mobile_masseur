@@ -1,4 +1,4 @@
-import { GET_PERSONS, DELETE_PERSON, ADD_PERSON } from '../actions/types.js';
+import { GET_PERSONS, DELETE_PERSON, ADD_PERSON, LOGOUT_SUCCESS } from '../actions/types.js';
 
 const initialState = {
     persons: []
@@ -20,6 +20,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 persons: [...state.persons, action.payload]
+            };
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                persons: []
             };
         default:
             return state;
