@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser as DjangoUser
+# from django.contrib.auth.models import User
 
 
 # class Admin(models.Model):
@@ -26,3 +27,12 @@ class User(DjangoUser):
 
     def __str__(self):
         return f"{self.username} email: {self.email}"
+
+
+# class Person(models.Model):
+#     name = models.CharField(max_length=100)
+#     email = models.EmailField(max_length=100, unique=True)
+#     message = models.CharField(max_length=500, blank=True)
+#     owner = models.ForeignKey(
+#         User, related_name="persons", on_delete=models.CASCADE, null=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
