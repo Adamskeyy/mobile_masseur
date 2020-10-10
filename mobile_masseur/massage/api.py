@@ -37,13 +37,7 @@ class MassageDeliveryViewSet(viewsets.ModelViewSet):
 
 
 class MassageDateTimeViewSet(viewsets.ModelViewSet):
-    queryset = MassageDateTime.objects.filter(is_active=True)
-    USE_TZ = True
-    for data in queryset:
-        if data.date_time < timezone.now():
-            data.is_active = False
-            data.save()
-    queryset = MassageDateTime.objects.filter(is_active=True)
+    queryset = MassageDateTime.objects.filter(date_time__gt=timezone.now(), is_active=True)
     permission_classes = [
         permissions.AllowAny
     ]
