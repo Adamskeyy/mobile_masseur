@@ -11,4 +11,5 @@ TERMINAL PIERWSZY
 6. python manage.py runserver
 
 TERMINAL DRUGI
-1. npm run dev
+1. npm install
+2. npm run dev
