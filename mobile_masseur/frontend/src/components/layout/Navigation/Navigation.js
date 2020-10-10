@@ -18,7 +18,7 @@ class Navigation extends Component {
             <>
                 <span className="navbar-text ml-1">
                     <strong>
-                        {user ? `Welcome, ${user.username}` : ''}
+                        {user ? `Witaj, ${user.username}` : ''}
                     </strong>
                 </span>
                 <li className="nav-link"><button onClick={this.props.logout} className="nav-link btn btn-outline-primary btn-sm">Wyloguj</button></li>

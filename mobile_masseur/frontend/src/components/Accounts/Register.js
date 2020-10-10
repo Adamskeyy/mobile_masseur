@@ -43,10 +43,10 @@ class Register extends Component {
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
-                    <h2 className="text-center">Register</h2>
+                    <h2 className="text-center">Rejestracja</h2>
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
-                            <label>Username</label>
+                            <label>Nazwa użytkownika</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -66,7 +66,7 @@ class Register extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label>Hasło</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -76,7 +76,7 @@ class Register extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Confirm Password</label>
+                            <label>Potwierdź hasło</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -87,11 +87,11 @@ class Register extends Component {
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary">
-                                Register
+                                Zarejestruj się
                             </button>
                         </div>
                         <p>
-                            Already have an account? <Link to="/login">Login</Link>
+                            Masz już konto? <Link to="/login">Zaloguj się</Link>
                         </p>
                     </form>
                 </div>
