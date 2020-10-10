@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import signals
 from users.models import User
+from datetime import datetime
 
 
 # from django.contrib.auth.models import User
@@ -10,12 +11,15 @@ class MassageDateTime(models.Model):
     date_time = models.DateTimeField()
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ('date_time', 'is_active')
+
     def __str__(self):
         if self.is_active:
             availability = "termin dostępny"
         else:
             availability = "termin niedostępny"
-        return f"{self.date_time} - {availability}"
+        return f"{self.date_time.strftime('%Y-%m-%d %H:%M')} - {availability}"
 
 
 class MassageDelivery(models.Model):

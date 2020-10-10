@@ -1,4 +1,5 @@
 from django.db import models
+from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser as DjangoUser
 
@@ -26,3 +27,13 @@ class User(DjangoUser):
 
     def __str__(self):
         return f"{self.username} email: {self.email}"
+
+
+class Masseur(models.Model):
+    about_me = models.TextField(default="")
+    address = models.CharField(max_length=150, null=True)
+    email = models.EmailField(null=True)
+    phone = models.CharField(max_length=150, null=True)
+    fb_url = models.URLField(null=True)
+
+
