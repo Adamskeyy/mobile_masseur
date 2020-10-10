@@ -1,3 +1,6 @@
+import datetime
+from django.utils import timezone
+
 from .models import MassageService, MassageType, MassageDelivery, MassageDateTime
 from rest_framework import viewsets, permissions
 from .serializers import MassageServiceSerializer, MassageTypeSerializer, MassageDeliverySerializer, \
@@ -18,7 +21,7 @@ class MassageServiceViewSet(viewsets.ModelViewSet):
 
 
 class MassageTypeViewSet(viewsets.ModelViewSet):
-    queryset = MassageType.objects.all()
+    queryset = MassageType.objects.filter(is_active=True)
     permission_classes = [
         permissions.AllowAny
     ]
@@ -34,7 +37,13 @@ class MassageDeliveryViewSet(viewsets.ModelViewSet):
 
 
 class MassageDateTimeViewSet(viewsets.ModelViewSet):
-    queryset = MassageDateTime.objects.all()
+    queryset = MassageDateTime.objects.filter(is_active=True)
+    USE_TZ = True
+    for data in queryset:
+        if data.date_time < timezone.now():
+            data.is_active = False
+            data.save()
+    queryset = MassageDateTime.objects.filter(is_active=True)
     permission_classes = [
         permissions.AllowAny
     ]

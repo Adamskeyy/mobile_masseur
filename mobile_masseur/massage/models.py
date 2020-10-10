@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 from model_utils import Choices
 
 from users.models import User
@@ -9,10 +10,10 @@ from users.models import User
 
 class MassageDateTime(models.Model):
     date_time = models.DateTimeField()
-    is_free = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        if self.is_free:
+        if self.is_active:
             availability = "termin dostępny"
         else:
             availability = "termin niedostępny"
@@ -32,6 +33,7 @@ class MassageType(models.Model):
     duration = models.IntegerField()
     description = models.TextField(null=True, blank=True)
     cost = models.IntegerField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name} - {self.duration} min"
@@ -53,6 +55,12 @@ class MassageService(models.Model):
         related_name='user',
         null=True,
     )
+
+    # def your_callable_function(sender, instance, **kwargs):
+    #
+    # # do something, create other model instances, etc
+    #
+    # signals.post_save.connect(your_callable_function, sender=Message)
 
     class Meta:
         ordering = ('massage_date_time',)
