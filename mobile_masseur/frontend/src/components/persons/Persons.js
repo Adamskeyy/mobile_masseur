@@ -17,15 +17,15 @@ export class Persons extends Component {
     render() {
         return (
             <Fragment>
-                <h2>Persons</h2>
+                <h2>Historia usług</h2>
                 <div className="container">
                     <table className="table table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Imię</th>
                                 <th>Email</th>
-                                <th>Message</th>
+                                <th>Rodzaj masażu/czas trwania/termin/godzina</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -36,7 +36,7 @@ export class Persons extends Component {
                                     <td>{person.name}</td>
                                     <td>{person.email}</td>
                                     <td>{person.message}</td>
-                                    <td><button onClick={this.props.deletePerson.bind(this, person.id)} className="btn btn-danger btn-sm">Delete</button></td>
+                                    <td><button onClick={this.props.deletePerson.bind(this, person.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
                             ))}
                         </tbody>

@@ -33,10 +33,10 @@ export class Form extends Component {
         return (
             <div className="container">
                 <div className="card card-body mt-4 mb-4">
-                    <h2>Add Person</h2>
+                    <h2>Umów usługę</h2>
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
-                            <label>Name</label>
+                            <label>Imię</label>
                             <input
                                 className="form-control"
                                 type="text"
@@ -56,7 +56,7 @@ export class Form extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Message</label>
+                            <label>Rodzaj masażu/czas trwania/termin/godzina</label>
                             <textarea
                                 className="form-control"
                                 type="text"
@@ -67,7 +67,7 @@ export class Form extends Component {
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary">
-                                Submit
+                                Umów
                         </button>
                         </div>
                     </form>

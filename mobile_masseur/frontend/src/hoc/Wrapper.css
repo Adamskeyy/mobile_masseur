@@ -4,12 +4,12 @@
 
 @media (max-width: 1200px) {
     .wrapper {
-        margin-top: 175px;
+        margin-top: 190px;
     }
-  }
+}
   
 @media (max-width: 900px) {
     .wrapper {
         margin-top: 100px;
-}
+    }
 }

@@ -38,6 +38,7 @@ class Navigation extends Component {
                 <ul>
                     <li className="nav-link"><Link to="/">Home</Link></li>
                     <li className="nav-link"><Link to="/dashboard">Umów usługę</Link></li>
+                    {/* <li className="nav-link"><Link to="/appointments">Umów usługę</Link></li> */}
                     <li className="nav-link"><a href="#">Cennik</a></li>
                     <li className="nav-link"><a href="#">Kontakt</a></li>
                     {isAuthenticated ? authLinks : guestLinks}

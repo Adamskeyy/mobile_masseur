@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import Wrapper from '../../hoc/Wrapper';
 
 class Login extends Component {
     state = {
@@ -71,4 +72,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default Wrapper(connect(mapStateToProps, { login })(Login));
