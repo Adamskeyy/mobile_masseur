@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('users.urls')),
     path('', include('massage.urls')),
+    path('', include('persons.urls')),
 ]
