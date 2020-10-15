@@ -1,0 +1,30 @@
+Dzień dobry,
+
+Dziękujemy za dokonanie rezerwacji usługi na naszej stronie.
+Poniżej szczegóły rezerwacji:
+
+Masaż: {{ service.massage_type.name }}
+Czas trwania: {{ service.massage_type.duration }} minut
+Cena masażu : {{ service.massage_type.cost }} zł
+Miejsce masażu: {{ service.massage_delivery.place }}
+Cena dojazdu : {{ service.massage_delivery.cost }} zł
+
+Całkowity koszt masażu: {{ total_cost }} zł
+ {% if service.comment %}
+Uwagi: {{ service.comment }}
+{% endif %}
+Adres: {{ service.address }}
+Dane kontaktowe: {{ service.owner.phone }}
+
+Jeżeli dane są niepoprawne prosimy o kontakt.
+
+Życzymy miłego masażu.
+
+Do zobaczenia!
+
+Sławomir Grajewski
+
+Mobilny Masażysta Trójmiasto
+tel. 666617008
+Sopot Kamienny Potok
+https://www.facebook.com/MobilnyMasazystaTrojmiasto/
