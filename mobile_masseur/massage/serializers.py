@@ -28,3 +28,11 @@ class MassageDeliverySerializer(serializers.ModelSerializer):
     class Meta:
         model = MassageDelivery
         fields = '__all__'
+
+
+class TemporaryMassageDateTimeSerializer(serializers.ModelSerializer):
+    date_time = serializers.DateTimeField(format=settings.DATETIME_FORMAT, input_formats=None)
+
+    class Meta:
+        model = MassageDateTime
+        fields = ['id', 'date_time', 'is_active']
