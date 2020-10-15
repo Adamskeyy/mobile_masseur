@@ -31,17 +31,6 @@ class App extends Component {
 
     render() {
         return (
-<<<<<<< HEAD
-            <div>
-                <Header />
-                <h1>MOBILNY MASAŻYSTA WOHOOO!!!!</h1>
-                <img style={{ width: '600px' }} src="https://ocdn.eu/images/pulscms/YTM7MDA_/237b4f5678a36c96a3258215f8c93df2.jpg" alt="STONOGA" />
-            </div>
-
-        )
-    }
-}
-=======
             <Provider store={store}>
                 <AlertProvider template={AlertTemplate} {...alertOptions}>
                     <Router>
@@ -62,6 +51,5 @@ class App extends Component {
         );
     };
 };
->>>>>>> 52e701637a4b3238b817305b3ccdb914a422a78c
 
 ReactDOM.render(<App />, document.getElementById('app'));
