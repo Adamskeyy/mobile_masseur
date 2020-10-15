@@ -22,14 +22,10 @@ export class ServiceList extends Component {
         this.props.getDatetimes();
         this.props.getServices();
         this.props.getLocations();
-        // console.log('Po załadowaniu', this.state);
-        console.log(this.props.service_datetimes, this.props.service_types, this.props.locations);
     };
 
     handleChange = e => {
-        // console.log('Przed wybraniem opcji: ', this.state);
         this.setState({ [e.target.name]: e.target.value });
-        // console.log('Po wybraniu opcji: ', this.state);
     }
 
     handleSubmit = e => {
@@ -41,7 +37,6 @@ export class ServiceList extends Component {
             "comment": message,
             "massage_delivery": parseInt(locations),
             };
-        console.log('Po wciśnięciu submita', service);
         this.props.chooseAppointment(service);
         this.setState({
             service_datetimes: '',

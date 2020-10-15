@@ -23,11 +23,12 @@ export default function (state = initialState, action) {
                 ...state,
                 locations: action.payload
             };
-        // case CANCEL_APPOINTMENT:
-        //     return {
-        //         ...state,
-        //         service_datetimes: state.service_datetimes.filter(datetime => datetime.id !== action.payload)
-        //     };
+        case CANCEL_APPOINTMENT:
+            return {
+                ...state,
+                service_datetimes: state.service_datetimes.filter(datetime => datetime.id !== action.payload)
+            };
+        // Czy na pewno poprawne pole w returnie?
         case SCHEDULE_APPOINTMENT:
             return {
                 ...state,
