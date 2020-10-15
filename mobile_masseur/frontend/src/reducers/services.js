@@ -23,15 +23,17 @@ export default function (state = initialState, action) {
                 ...state,
                 locations: action.payload
             };
-        case CANCEL_APPOINTMENT:
-            return {
-                ...state,
-                service_datetimes: state.service_datetimes.filter(datetime => datetime.id !== action.payload)
-            };
+        // case CANCEL_APPOINTMENT:
+        //     return {
+        //         ...state,
+        //         service_datetimes: state.service_datetimes.filter(datetime => datetime.id !== action.payload)
+        //     };
         case SCHEDULE_APPOINTMENT:
             return {
                 ...state,
-                service_dates: [...state.service_dates, action.payload]
+                service_datetimes: [...state.service_dates, action.payload],
+                service_types: [...state.service_types, action.payload],
+                locations: [...state.locations, action.payload]
             };
         default:
             return state;

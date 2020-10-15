@@ -58,11 +58,14 @@ def change_inactive_date(sender, instance, **kwargs):
 
 
 class MassageService(models.Model):
-    massage_type = models.ForeignKey(MassageType, on_delete=models.DO_NOTHING, null=True)
-    massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING, null=True)
+    massage_type = models.ForeignKey(
+        MassageType, on_delete=models.DO_NOTHING, null=True)
+    massage_date_time = models.ForeignKey(
+        MassageDateTime, on_delete=models.DO_NOTHING, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     comment = models.TextField(null=True, blank=True)
-    massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING, null=True)
+    massage_delivery = models.ForeignKey(
+        MassageDelivery, on_delete=models.DO_NOTHING, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     owner = models.ForeignKey(
         User,
