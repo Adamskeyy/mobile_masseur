@@ -1,10 +1,44 @@
+from django.core.mail import EmailMessage
 from django.db import models
 from django.db.models import signals
+from django import forms
+from django.forms import DateTimeField
+from django.template.loader import render_to_string
 from users.models import User
 from datetime import datetime
+from mobile_masseur import settings
 
 
-# from django.contrib.auth.models import User
+def cancel(instance):
+    total_cost = instance.massage_type.cost + instance.massage_delivery.cost
+    template = render_to_string('cancel_email_template.html', context={
+                                "service": instance, "total_cost": total_cost})
+
+    email = EmailMessage(
+        f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+        template,
+        settings.EMAIL_HOST_USER,
+        [instance.owner.email],
+        ["slagra@o2.pl"]
+    )
+    email.fail_silently = False
+    email.send()
+
+
+def success(instance):
+    total_cost = instance.massage_type.cost + instance.massage_delivery.cost
+    template = render_to_string('email_template.html', context={
+                                "service": instance, "total_cost": total_cost})
+
+    email = EmailMessage(
+        f'Rezerwacja masażu {instance.massage_type.duration} min termin: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+        template,
+        settings.EMAIL_HOST_USER,
+        [instance.owner.email],
+        ["slagra@o2.pl"],
+    )
+    email.fail_silently = False
+    email.send()
 
 
 class MassageDateTime(models.Model):
@@ -23,7 +57,8 @@ class MassageDateTime(models.Model):
 
 
 class MassageDelivery(models.Model):
-    place = models.CharField(max_length=100)
+    place = models.CharField(
+        max_length=100, default="Gabinet Sopot Kamienny Potok")
     cost = models.IntegerField(default=0)
 
     def __str__(self):
@@ -49,12 +84,14 @@ def change_active_date(sender, instance, **kwargs):
     if instance.created:
         instance.massage_date_time.is_active = False
         instance.massage_date_time.save()
+        success(instance)
 
 
 def change_inactive_date(sender, instance, **kwargs):
     if instance.created:
         instance.massage_date_time.is_active = True
         instance.massage_date_time.save()
+        cancel(instance)
 
 
 class MassageService(models.Model):
@@ -66,7 +103,8 @@ class MassageService(models.Model):
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(
         MassageDelivery, on_delete=models.DO_NOTHING, null=True)
-    address = models.CharField(max_length=200, blank=True, null=True)
+    address = models.CharField(
+        max_length=200, blank=True, null=True, default="Gabinet Sopot Kamienny Potok")
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

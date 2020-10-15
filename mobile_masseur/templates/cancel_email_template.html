@@ -1,0 +1,31 @@
+Dzień dobry,
+
+Bardzo nam przykro, ale rezerwacja została odwołana.
+
+Poniżej szczegóły odwołanej rezerwacji:
+
+Masaż: {{ service.massage_type.name }}
+Czas trwania: {{ service.massage_type.duration }} minut
+Cena masażu : {{ service.massage_type.cost }} zł
+Miejsce masażu: {{ service.massage_delivery.place }}
+Cena dojazdu : {{ service.massage_delivery.cost }} zł
+
+Całkowity koszt masażu: {{ total_cost }} zł
+ {% if service.comment %}
+Uwagi: {{ service.comment }}
+{% endif %}
+Adres: {{ service.address }}
+Dane kontaktowe: {{ service.owner.phone }}
+
+Zachęcamy do zarezerwowania innego terminu masażu na naszej stronie internetowej.
+
+Życzymy miłego dnia.
+
+Do zobaczenia!
+
+Sławomir Grajewski
+
+Mobilny Masażysta Trójmiasto
+tel. 666617008
+Sopot Kamienny Potok
+https://www.facebook.com/MobilnyMasazystaTrojmiasto/

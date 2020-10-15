@@ -4,7 +4,7 @@ from django.utils import timezone
 from .models import MassageService, MassageType, MassageDelivery, MassageDateTime
 from rest_framework import viewsets, permissions
 from .serializers import MassageServiceSerializer, MassageTypeSerializer, MassageDeliverySerializer, \
-    MassageDateTimeSerializer
+    MassageDateTimeSerializer, TemporaryMassageDateTimeSerializer
 
 
 class MassageServiceViewSet(viewsets.ModelViewSet):
@@ -42,3 +42,19 @@ class MassageDateTimeViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = MassageDateTimeSerializer
+
+
+class TemporaryMassageDateTimeViewSet(viewsets.ModelViewSet):
+    queryset = MassageDateTime.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = TemporaryMassageDateTimeSerializer
+
+
+class TemporaryMassageServiceViewSet(viewsets.ModelViewSet):
+    queryset = MassageService.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = MassageServiceSerializer

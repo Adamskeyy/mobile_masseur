@@ -18,8 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wa7%m^)ltb6*5zz!!lv^+#5cj5o@d7^d$hy8iju&$so^w0@2r$'
+from .secret_data import SECRET_KEY as SK
+SECRET_KEY = SK
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -66,7 +66,7 @@ ROOT_URLCONF = 'mobile_masseur.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,3 +126,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# SMTP Configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+from .secret_data import EMAIL_HOST_PASSWORD as email_password, EMAIL_HOST_USER as email_user
+EMAIL_HOST_USER = email_user
+EMAIL_HOST_PASSWORD = email_password
+
+DATETIME_FORMAT = '%d.%m.%Y %H:%m'
