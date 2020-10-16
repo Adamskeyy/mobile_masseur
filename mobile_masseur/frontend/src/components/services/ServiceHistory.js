@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getPersons, deletePerson } from '../../actions/persons';
+import { cancelAppointment, getServices } from '../../actions/services';
 
 export class ServiceHistory extends Component {
     static propTypes = {
-        persons: PropTypes.array.isRequired,
-        getPersons: PropTypes.func.isRequired,
-        deletePerson: PropTypes.func.isRequired
+        services: PropTypes.array.isRequired,
+        getServices: PropTypes.func.isRequired,
+        cancelAppointment: PropTypes.func.isRequired
     };
 
     componentDidMount() {
-        this.props.getPersons();
+        // this.props.getServices();
     }
 
     render() {
@@ -31,18 +31,18 @@ export class ServiceHistory extends Component {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {this.props.persons.map(person => (
-                                <tr key={person.id}>
-                                    <td>{person.id}</td>
-                                    <td>{person.name}</td>
-                                    <td>{person.email}</td>
-                                    <td>{person.message}</td>
-                                    <td>{person.message}</td>
-                                    <td><button onClick={this.props.deletePerson.bind(this, person.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
+                        {/* <tbody>
+                            {this.props.services.map(service => (
+                                <tr key={service.id}>
+                                    <td>{service.id}</td>
+                                    <td>{service.name}</td>
+                                    <td>{service.email}</td>
+                                    <td>{service.message}</td>
+                                    <td>{service.message}</td>
+                                    <td><button onClick={this.props.cancelAppointment.bind(this, person.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
                             ))}
-                        </tbody>
+                        </tbody> */}
                     </table>
                 </div>
             </Fragment>
@@ -51,7 +51,7 @@ export class ServiceHistory extends Component {
 }
 
 const mapStateToProps = state => ({
-    persons: state.persons.persons
+    services: state.services.services,
 });
 
-export default connect(mapStateToProps, { getPersons, deletePerson })(ServiceHistory);
+export default connect(mapStateToProps, { getServices, cancelAppointment })(ServiceHistory);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
 
-import { GET_DATETIMES, GET_SERVICE_TYPES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT } from './types';
+import { GET_DATETIMES, GET_SERVICE_TYPES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT, GET_SERVICES } from './types';
 
 // GET DATETIMES
 export const getDatetimes = () => (dispatch, getState) => {
@@ -42,7 +42,7 @@ export const getLocations = () => (dispatch, getState) => {
 
 // CANCEL APPOINTMENT
 export const cancelAppointment = (id) => (dispatch, getState) => {
-    axios.update(`/api/persons/${id}/`, tokenConfig(getState))
+    axios.delete(`/api/massage/service${id}/`, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({ cancelAppointment: 'Usługa odwołana' }));
             dispatch({
@@ -53,15 +53,31 @@ export const cancelAppointment = (id) => (dispatch, getState) => {
         .catch(err => console.log(err));
 }
 
-// CHOOSE APOINTMENT
+// GET SERVICES
+export const getServices = () => (dispatch, getState) => {
+    axios.get('/api/massage/service', tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_SERVICES,
+                payload: res.data
+            });
+        })
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+}
+
+// CHOOSE APOINTMENT ? make
 export const chooseAppointment = (service) => (dispatch, getState) => {
     axios.post('/api/massage/service/', service, tokenConfig(getState))
         .then(res => {
+            console.log(res);
             dispatch(createMessage({ chooseAppointment: 'Usługa wybrana' }));
             dispatch({
                 type: SCHEDULE_APPOINTMENT,
                 payload: res.data
             });
         })
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+        .catch(err => {
+            console.error(err);
+            dispatch(returnErrors(err.response.data, err.response.status))
+        });
 };
