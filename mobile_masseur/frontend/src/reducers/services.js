@@ -1,9 +1,10 @@
-import { GET_DATETIMES, GET_SERVICES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT } from '../actions/types.js';
+import { GET_DATETIMES, GET_SERVICE_TYPES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT, GET_SERVICES } from '../actions/types.js';
 
 const initialState = {
     service_datetimes: [],
     service_types: [],
-    locations: []
+    locations: [],
+    comments: []
 };
 
 export default function (state = initialState, action) {
@@ -13,7 +14,7 @@ export default function (state = initialState, action) {
                 ...state,
                 service_datetimes: action.payload
             };
-        case GET_SERVICES:
+        case GET_SERVICE_TYPES:
             return {
                 ...state,
                 service_types: action.payload
@@ -34,8 +35,14 @@ export default function (state = initialState, action) {
                 ...state,
                 service_datetimes: [...state.service_dates, action.payload],
                 service_types: [...state.service_types, action.payload],
-                locations: [...state.locations, action.payload]
+                locations: [...state.locations, action.payload],
+                comment
             };
+            case GET_SERVICES:
+                return {
+                    ...state,
+                    services: action.payload
+                };
         default:
             return state;
     };

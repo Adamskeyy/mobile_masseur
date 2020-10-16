@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
 
-import { GET_DATETIMES, GET_SERVICES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT } from './types';
+import { GET_DATETIMES, GET_SERVICE_TYPES, GET_LOCATIONS, SCHEDULE_APPOINTMENT, CANCEL_APPOINTMENT } from './types';
 
 // GET DATETIMES
 export const getDatetimes = () => (dispatch, getState) => {
@@ -16,12 +16,12 @@ export const getDatetimes = () => (dispatch, getState) => {
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
 
-// GET SERVICES
-export const getServices = () => (dispatch, getState) => {
+// GET SERVICE_TYPES
+export const getServiceTypes = () => (dispatch, getState) => {
     axios.get('/api/massage/type/', tokenConfig(getState))
         .then(res => {
             dispatch({
-                type: GET_SERVICES,
+                type: GET_SERVICE_TYPES,
                 payload: res.data
             });
         })

@@ -1,48 +1,58 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getDatetimes, getServices, getLocations, chooseAppointment } from '../../actions/services';
+import { getDatetimes, getServiceTypes, getLocations, chooseAppointment } from '../../actions/services';
 
 export class ServiceList extends Component {
     state = {
-        service_datetimes: '',
-        service_types: '',
-        locations: '',
+        service_datetime: '',
+        service_type: '',
+        location: '',
         message: ''
     };
 
     static propTypes = {
         chooseAppointment: PropTypes.func.isRequired,
         getDatetimes: PropTypes.func.isRequired,
-        getServices: PropTypes.func.isRequired,
+        getServiceTypes: PropTypes.func.isRequired,
         getLocations: PropTypes.func.isRequired
     };
 
     componentDidMount() {
         this.props.getDatetimes();
-        this.props.getServices();
+        this.props.getServiceTypes();
         this.props.getLocations();
+    };
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            ...state,
+            service_datetime: props.service_datetimes[0],
+            service_type: props.service_types[0],
+            location: props.locations[0]
+        };
     };
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
+        console.log(this.state);
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        const { service_datetimes, service_types, locations, message } = this.state;
+        const { service_datetime, service_type, location, message } = this.state;
         const service = {
-            "massage_type": parseInt(service_types),
-            "massage_date_time": parseInt(service_datetimes),
+            "massage_type": parseInt(service_type),
+            "massage_date_time": parseInt(service_datetime),
             "comment": message,
-            "massage_delivery": parseInt(locations),
+            "massage_delivery": parseInt(location),
             };
         this.props.chooseAppointment(service);
         this.setState({
-            service_datetimes: '',
-            service_types: '',
-            locations: '',
-            message: ''
+            service_datetime: '',
+            service_type: '',
+            location: '',
+            comment: ''
         });
     };
 
@@ -77,21 +87,21 @@ export class ServiceList extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="serviceType">Nazwa masażu, czas trwania i koszt</label>
-                            <select className="form-control" id="serviceType" name="service_types" value={this.state.service_types} onChange={this.handleChange}>
+                            <select className="form-control" id="serviceType" name="service_type" value={this.state.service_types} onChange={this.handleChange}>
                                 <option value="" disabled hidden>Wybierz...</option>
                                 {serviceTypeOptions}
                             </select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="dateTime">Termin</label>
-                            <select className="form-control" id="dateTime" name="service_datetimes" value={this.state.service_datetimes} onChange={this.handleChange}>
+                            <select className="form-control" id="dateTime" name="service_datetime" value={this.state.service_datetimes} onChange={this.handleChange}>
                                 <option value="" disabled hidden>Wybierz...</option>
                                 {dateTimeOptions}
                             </select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="location">Lokalizacja i koszt dojazdu</label>
-                            <select className="form-control" id="location" name="locations" value={this.state.locations} onChange={this.handleChange}>
+                            <select className="form-control" id="location" name="location" value={this.state.locations} onChange={this.handleChange}>
                                 <option value="" disabled hidden>Wybierz...</option>
                                 {locationOptaions}
                             </select>
@@ -103,7 +113,7 @@ export class ServiceList extends Component {
                                 type="text"
                                 name="message"
                                 onChange={this.handleChange}
-                                value={this.state.message}
+                                value={this.state.comment}
                             />
                         </div>
                         <div className="form-group">
@@ -124,4 +134,4 @@ const mapStateToProps = state => ({
     locations: state.services.locations
 });
 
-export default connect(mapStateToProps, { getDatetimes, getServices, getLocations, chooseAppointment })(ServiceList);
+export default connect(mapStateToProps, { getDatetimes, getServiceTypes, getLocations, chooseAppointment })(ServiceList);
