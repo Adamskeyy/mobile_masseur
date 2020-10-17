@@ -55,7 +55,7 @@ export const cancelAppointment = (id) => (dispatch, getState) => {
 
 // GET SERVICES
 export const getServices = () => (dispatch, getState) => {
-    axios.get('/api/massage/service', tokenConfig(getState))
+    axios.get('/api/temporary/massage/service', tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_SERVICES,
