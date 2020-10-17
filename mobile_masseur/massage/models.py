@@ -114,14 +114,11 @@ class MassageService(models.Model):
         ordering = ('massage_date_time',)
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            super(models.Model, self).save(*args, **kwargs)
-        else:
-            self.total_cost = self.massage_delivery.cost + self.massage_type.cost
-        super(models.Model, self).save(*args, **kwargs)
+        self.total_cost = self.massage_delivery.cost + self.massage_type.cost
+        super(MassageService, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost} zł"
+        return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost} zł {self.owner.username}"
 
 
 signals.post_save.connect(change_active_date, sender=MassageService)
