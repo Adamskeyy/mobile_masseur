@@ -20,7 +20,7 @@ export const getPersons = () => (dispatch, getState) => {
 export const deletePerson = (id) => (dispatch, getState) => {
     axios.delete(`/api/persons/${id}/`, tokenConfig(getState))
         .then(res => {
-            dispatch(createMessage({ deletePerson: 'Person Deleted' }));
+            dispatch(createMessage({ deletePerson: 'Usługa odwołana' }));
             dispatch({
                 type: DELETE_PERSON,
                 payload: id
@@ -33,7 +33,7 @@ export const deletePerson = (id) => (dispatch, getState) => {
 export const addPerson = (person) => (dispatch, getState) => {
     axios.post('/api/persons/', person, tokenConfig(getState))
         .then(res => {
-            dispatch(createMessage({ addPerson: 'Person Added' }));
+            dispatch(createMessage({ addPerson: 'Usługa dodana' }));
             dispatch({
                 type: ADD_PERSON,
                 payload: res.data

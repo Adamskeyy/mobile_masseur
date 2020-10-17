@@ -11,7 +11,8 @@ from mobile_masseur import settings
 
 def cancel(instance):
     total_cost = instance.massage_type.cost + instance.massage_delivery.cost
-    template = render_to_string('cancel_email_template.html', context={"service": instance, "total_cost": total_cost})
+    template = render_to_string('cancel_email_template.html', context={
+                                "service": instance, "total_cost": total_cost})
 
     email = EmailMessage(
         f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
@@ -26,7 +27,8 @@ def cancel(instance):
 
 def success(instance):
     total_cost = instance.massage_type.cost + instance.massage_delivery.cost
-    template = render_to_string('email_template.html', context={"service": instance, "total_cost": total_cost})
+    template = render_to_string('email_template.html', context={
+                                "service": instance, "total_cost": total_cost})
 
     email = EmailMessage(
         f'Rezerwacja masażu {instance.massage_type.duration} min termin: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
@@ -55,7 +57,8 @@ class MassageDateTime(models.Model):
 
 
 class MassageDelivery(models.Model):
-    place = models.CharField(max_length=100, default="Gabinet Sopot Kamienny Potok")
+    place = models.CharField(
+        max_length=100, default="Gabinet Sopot Kamienny Potok")
     cost = models.IntegerField(default=0)
 
     def __str__(self):
@@ -99,6 +102,7 @@ class MassageService(models.Model):
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, default="Gabinet Sopot Kamienny Potok")
+
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

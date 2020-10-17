@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPersons, deletePerson } from '../../actions/persons';
 
-export class Persons extends Component {
+export class ServiceHistory extends Component {
     static propTypes = {
         persons: PropTypes.array.isRequired,
         getPersons: PropTypes.func.isRequired,
@@ -23,9 +23,11 @@ export class Persons extends Component {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Imię</th>
-                                <th>Email</th>
-                                <th>Rodzaj masażu/czas trwania/termin/godzina</th>
+                                <th>Nazwa usługi</th>
+                                <th>Termin</th>
+                                <th>Lokalizacja</th>
+                                <th>Dodatkowe uwagi</th>
+                                <th>Całkowity koszt</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -35,6 +37,7 @@ export class Persons extends Component {
                                     <td>{person.id}</td>
                                     <td>{person.name}</td>
                                     <td>{person.email}</td>
+                                    <td>{person.message}</td>
                                     <td>{person.message}</td>
                                     <td><button onClick={this.props.deletePerson.bind(this, person.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
@@ -51,4 +54,4 @@ const mapStateToProps = state => ({
     persons: state.persons.persons
 });
 
-export default connect(mapStateToProps, { getPersons, deletePerson })(Persons);
+export default connect(mapStateToProps, { getPersons, deletePerson })(ServiceHistory);

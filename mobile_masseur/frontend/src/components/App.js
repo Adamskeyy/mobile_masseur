@@ -5,6 +5,7 @@ import Dashboard from './persons/Dashboard';
 import Alerts from './layout/Alerts';
 import Footer from './layout/Footer/Footer';
 import Tiles from './layout/Tiles/Tiles';
+import Appointments from './services/Appointments';
 import Login from './Accounts/Login';
 import Register from './Accounts/Register';
 import PrivateRoute from './common/PrivateRoute';
@@ -41,7 +42,7 @@ class App extends Component {
                                 <Route exact path='/' component={Tiles} />
                                 <Route exact path='/register' component={Register} />
                                 <Route exact path='/login' component={Login} />
-                                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                                <PrivateRoute exact path='/appointments' component={Appointments} />
                             </Switch>
                             <Footer />
                         </div>

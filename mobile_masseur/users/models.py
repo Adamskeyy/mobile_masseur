@@ -24,8 +24,12 @@ class User(DjangoUser):
 
 
 class Masseur(models.Model):
+    name = models.CharField(max_length=100, default="Man with no name")
     about_me = models.TextField(default="")
     address = models.CharField(max_length=150, null=True)
     email = models.EmailField(null=True)
     phone = models.CharField(max_length=150, null=True)
     fb_url = models.URLField(null=True)
+
+    def __str__(self):
+        return self.name

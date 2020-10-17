@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'massage',
     'knox',
+    'persons',
 ]
 
 REST_FRAMEWORK = {
