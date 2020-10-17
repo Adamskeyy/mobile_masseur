@@ -8,7 +8,8 @@ export class ServiceList extends Component {
         service_datetime: '',
         service_type: '',
         location: '',
-        comment: ''
+        comment: '',
+        address: ''
     };
 
     static propTypes = {
@@ -47,12 +48,13 @@ export class ServiceList extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const { service_datetime, service_type, location, comment } = this.state;
+        const { service_datetime, service_type, location, comment, address } = this.state;
         const service = {
             "massage_type": +service_type, // js spróbuje skonwertować do liczby, !!do boola
             "massage_date_time": +service_datetime,
             "comment": comment,
             "massage_delivery": +location,
+            "address": address
         };
         console.log('service', service);
         console.log('state', this.state);
@@ -62,7 +64,8 @@ export class ServiceList extends Component {
             service_datetime: '',
             service_type: '',
             location: '',
-            comment: ''
+            comment: '',
+            address: ''
         });
     };
 
@@ -105,10 +108,14 @@ export class ServiceList extends Component {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="location">Lokalizacja i koszt dojazdu</label>
+                            <label htmlFor="location">Miasto i koszt dojazdu</label>
                             <select className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleChange}>
                                 {renderedLocations}
                             </select>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-control-label" htmlFor="address">Ulica i nr domu</label>
+                            <input type="text" name="address" className="form-control" id="address" value={this.state.address} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                             <label>Dodatkowe uwagi</label>
