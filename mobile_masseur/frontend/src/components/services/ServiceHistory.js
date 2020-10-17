@@ -22,7 +22,7 @@ export class ServiceHistory extends Component {
                     <table className="table table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Lp</th>
                                 <th>Nazwa usługi</th>
                                 <th>Termin</th>
                                 <th>Lokalizacja</th>
@@ -33,9 +33,9 @@ export class ServiceHistory extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.services.map(service => (
+                            {this.props.services.map((service, index) => (
                                 <tr key={service.id}>
-                                    <td>{service.id}</td>
+                                    <td>{index + 1}</td>
                                     <td>{service.massage_type}</td>
                                     <td>{service.massage_date_time}</td>
                                     <td>{service.massage_delivery}</td>

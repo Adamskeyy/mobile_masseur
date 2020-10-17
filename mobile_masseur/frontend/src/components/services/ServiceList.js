@@ -109,7 +109,7 @@ export class ServiceList extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="location">Miasto i koszt dojazdu</label>
-                            <select className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleChange}>
+                            <select isrequired="true" className="form-control" id="location" name="location" value={this.state.location} onChange={this.handleChange}>
                                 {renderedLocations}
                             </select>
                         </div>
