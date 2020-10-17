@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
         case CANCEL_APPOINTMENT:
             return {
                 ...state,
-                services: state.services.filter(datetime => datetime.id !== action.payload)
+                services: state.services.filter(id => service.id !== action.payload)
             };
         // Czy na pewno poprawne pola w returnie?
         case SCHEDULE_APPOINTMENT:
