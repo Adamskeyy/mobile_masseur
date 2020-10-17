@@ -14,7 +14,12 @@ class MassageServiceViewSet(viewsets.ModelViewSet):
     serializer_class = MassageServiceSerializer
 
     def get_queryset(self):
-        return self.request.user.all()
+        return self.request.user.services.all()
+
+    # def get_queryset(self):
+    #     queryset = MassageService.objects.all()
+    #     queryset = queryset.filter(user=self.request.user)
+    #     return queryset[0]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
