@@ -102,7 +102,6 @@ class MassageService(models.Model):
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, default="Gabinet Sopot Kamienny Potok")
-
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

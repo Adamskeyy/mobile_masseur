@@ -4,9 +4,10 @@ import ServiceList from './ServiceList';
 import Wrapper from '../../hoc/Wrapper';
 
 const Appointments = () => {
+    // lokalny stan do trzymania sygnatury czasowej
     return (
         <Fragment>
-            <ServiceList />
+            <ServiceList /> {/* Tablica z services w reduxie, sprawdzać długość i rerenderować komponent przy zmianie, dać jakiś klucz, który ma dostęp do długości tablicy */}
             <ServiceHistory />
         </Fragment>
     )
