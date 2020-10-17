@@ -12,7 +12,7 @@ from mobile_masseur import settings
 def cancel(instance):
     total_cost = instance.massage_type.cost + instance.massage_delivery.cost
     template = render_to_string('cancel_email_template.html', context={
-                                "service": instance, "total_cost": total_cost})
+        "service": instance, "total_cost": total_cost})
 
     email = EmailMessage(
         f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
@@ -28,7 +28,7 @@ def cancel(instance):
 def success(instance):
     total_cost = instance.massage_type.cost + instance.massage_delivery.cost
     template = render_to_string('email_template.html', context={
-                                "service": instance, "total_cost": total_cost})
+        "service": instance, "total_cost": total_cost})
 
     email = EmailMessage(
         f'Rezerwacja masażu {instance.massage_type.duration} min termin: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
@@ -102,6 +102,7 @@ class MassageService(models.Model):
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, default="Gabinet Sopot Kamienny Potok")
+    total_cost = models.IntegerField(default=0)
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -112,11 +113,15 @@ class MassageService(models.Model):
     class Meta:
         ordering = ('massage_date_time',)
 
-    def total_cost(self):
-        return self.massage_type.cost + self.massage_delivery.cost
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(models.Model, self).save(*args, **kwargs)
+        else:
+            self.total_cost = self.massage_delivery.cost + self.massage_type.cost
+        super(models.Model, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost()} zł"
+        return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost} zł"
 
 
 signals.post_save.connect(change_active_date, sender=MassageService)
