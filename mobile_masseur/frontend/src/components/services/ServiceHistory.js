@@ -11,7 +11,7 @@ export class ServiceHistory extends Component {
     };
 
     componentDidMount() {
-        // this.props.getServices();
+        this.props.getServices();
     }
 
     render() {
@@ -26,23 +26,26 @@ export class ServiceHistory extends Component {
                                 <th>Nazwa usługi</th>
                                 <th>Termin</th>
                                 <th>Lokalizacja</th>
+                                <th>Adres</th>
                                 <th>Dodatkowe uwagi</th>
                                 <th>Całkowity koszt</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        {/* <tbody>
+                        <tbody>
                             {this.props.services.map(service => (
                                 <tr key={service.id}>
                                     <td>{service.id}</td>
-                                    <td>{service.name}</td>
-                                    <td>{service.email}</td>
-                                    <td>{service.message}</td>
-                                    <td>{service.message}</td>
-                                    <td><button onClick={this.props.cancelAppointment.bind(this, person.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
+                                    <td>{service.massage_type}</td>
+                                    <td>{service.massage_date_time}</td>
+                                    <td>{service.massage_delivery}</td>
+                                    <td>{service.address}</td>
+                                    <td>{service.comment}</td>
+                                    <td>milion</td>
+                                    <td><button onClick={this.props.cancelAppointment.bind(this, service.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
                             ))}
-                        </tbody> */}
+                        </tbody>
                     </table>
                 </div>
             </Fragment>
