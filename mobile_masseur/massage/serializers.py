@@ -5,15 +5,23 @@ from mobile_masseur import settings
 
 
 class MassageServiceSerializer(serializers.ModelSerializer):
+    massage_type = serializers.ReadOnlyField(source='massage_type.name')
+    massage_date_time = serializers.DateTimeField(format=settings.DATETIME_FORMAT, input_formats=None,
+                                                  source='massage_date_time.date_time')
+    created = serializers.DateTimeField(format=settings.DATETIME_FORMAT, input_formats=None)
+    massage_delivery = serializers.StringRelatedField()
+    owner = serializers.ReadOnlyField(source='owner.username')
+
     class Meta:
         model = MassageService
-        fields = '__all__'
+        fields = ['id', 'massage_type', 'massage_date_time', 'created', 'comment', 'massage_delivery', 'address',
+                  'owner']
 
 
 class MassageTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MassageType
-        fields = '__all__'
+        fields = ['name', 'cost', 'duration', 'points']
 
 
 class MassageDateTimeSerializer(serializers.ModelSerializer):
