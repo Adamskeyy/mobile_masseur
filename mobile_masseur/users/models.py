@@ -15,12 +15,6 @@ class User(DjangoUser):
     points = models.IntegerField(default=0)
     is_blocked = models.BooleanField(default=False)
 
-    def get_massage_history(self):
-        pass
-
-    def get_massage_plan(self):
-        pass
-
     class Meta:
         unique_together = ('username', 'email')
         ordering = ('username',)
@@ -35,5 +29,3 @@ class Masseur(models.Model):
     email = models.EmailField(null=True)
     phone = models.CharField(max_length=150, null=True)
     fb_url = models.URLField(null=True)
-
-
