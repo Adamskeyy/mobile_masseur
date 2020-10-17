@@ -23,7 +23,7 @@ export class ServiceHistory extends Component {
                         <thead>
                             <tr>
                                 <th>Lp</th>
-                                <th>Nazwa usługi</th>
+                                <th>Nazwa masażu</th>
                                 <th>Termin</th>
                                 <th>Lokalizacja</th>
                                 <th>Adres</th>

@@ -23,8 +23,7 @@ class MassageServiceSerializer(serializers.ModelSerializer):
 class MassageTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MassageType
-        fields = ['id','name', 'cost', 'duration', 'points']
-
+        fields = ['id', 'name', 'cost', 'duration', 'points']
 
 class MassageDateTimeSerializer(serializers.ModelSerializer):
     date_time = serializers.DateTimeField(format=settings.DATETIME_FORMAT, input_formats=None)
