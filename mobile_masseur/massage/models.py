@@ -105,7 +105,7 @@ class MassageService(models.Model):
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='user',
+        related_name='services',
         null=True,
     )
 

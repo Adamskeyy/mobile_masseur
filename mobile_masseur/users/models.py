@@ -1,12 +1,47 @@
+from django.core.mail import EmailMessage
 from django.db import models
 from django.db import models
+from django.template.loader import render_to_string
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser as DjangoUser
+from django.db.models import signals
+
+from mobile_masseur import settings
 
 
-# class Admin(models.Model):
-#     email = models.EmailField(max_length=100, unique=True, default="slagra@tlen.pl")
-#     phone = PhoneNumberField(default='+48666617008')
+def cancel(instance):
+    total_cost = instance.massage_type.cost + instance.massage_delivery.cost
+    template = render_to_string('cancel_email_template.html', context={
+        "service": instance, "total_cost": total_cost})
+
+    email = EmailMessage(
+        f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+        template,
+        settings.EMAIL_HOST_USER,
+        [instance.owner.email],
+        ["slagra@o2.pl"]
+    )
+    email.fail_silently = False
+    email.send()
+
+
+def registrate_user(sender, instance, **kwargs):
+    template = render_to_string('registrate_user.html', context={
+        "user": instance})
+
+    email = EmailMessage(
+        f'Rejestracja użytkownika {instance.username} w serwisie Mobilny Masażysta Trójmiasto',
+        template,
+        settings.EMAIL_HOST_USER,
+        [instance.owner.email],
+        ["slagra@o2.pl"],
+    )
+    email.fail_silently = False
+    email.send()
+
+
+def delete_user(sender, instance, **kwargs):
+    pass
 
 
 class User(DjangoUser):
@@ -33,3 +68,7 @@ class Masseur(models.Model):
 
     def __str__(self):
         return self.name
+
+
+signals.post_save.connect(registrate_user, sender=User)
+signals.post_delete.connect(delete_user, sender=User)
