@@ -71,6 +71,7 @@ class MassageType(models.Model):
     description = models.TextField(null=True, blank=True)
     cost = models.IntegerField()
     is_active = models.BooleanField(default=True)
+    points = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return f"{self.name} - {self.duration} min"
@@ -95,14 +96,11 @@ def change_inactive_date(sender, instance, **kwargs):
 
 
 class MassageService(models.Model):
-    massage_type = models.ForeignKey(
-        MassageType, on_delete=models.DO_NOTHING)
-    massage_date_time = models.ForeignKey(
-        MassageDateTime, on_delete=models.DO_NOTHING)
+    massage_type = models.ForeignKey(MassageType, on_delete=models.DO_NOTHING)
+    massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True, null=True)
     comment = models.TextField(null=True, blank=True)
-    massage_delivery = models.ForeignKey(
-        MassageDelivery, on_delete=models.DO_NOTHING)
+    massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, default="Gabinet Sopot Kamienny Potok")
     owner = models.ForeignKey(
         User,

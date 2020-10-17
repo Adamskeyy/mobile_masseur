@@ -30,6 +30,6 @@ class Masseur(models.Model):
     email = models.EmailField(null=True)
     phone = models.CharField(max_length=150, null=True)
     fb_url = models.URLField(null=True)
+
     def __str__(self):
         return self.name
-
