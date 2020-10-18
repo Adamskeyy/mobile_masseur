@@ -17,6 +17,10 @@ Uwagi: {{ service.comment }}
 Adres: {{ service.address }}
 Dane kontaktowe: {{ service.owner.phone }}
 
+ {% if extra_message %}
+{{ extra_message }}
+ {% endif %}
+
 Zachęcamy do zarezerwowania innego terminu masażu na naszej stronie internetowej.
 
 Życzymy miłego dnia.
