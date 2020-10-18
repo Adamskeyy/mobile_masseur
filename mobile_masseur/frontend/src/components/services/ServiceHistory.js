@@ -12,11 +12,11 @@ export class ServiceHistory extends Component {
 
     componentDidMount() {
         this.props.getServices();
+
+        let someMillisecondValue = new Date(Date.now());
     }
 
     render() {
-
-        // const massagePoints = this.props.services ? 
 
 
         return (
@@ -42,13 +42,15 @@ export class ServiceHistory extends Component {
                                 <tr key={service.id}>
                                     <td>{index + 1}</td>
                                     <td>{service.massage_type_name}</td>
-                                    <td>{service.massage_date_time_name}</td>
+                                    <td>{new Date(service.massage_date_time_name).toLocaleString()}</td>
                                     <td>{service.massage_delivery_name}</td>
                                     <td>{service.address}</td>
                                     <td>{service.comment}</td>
                                     <td>{service.total_cost}</td>
-                                    {/* {massagePoints} */}
-                                    <td><button onClick={this.props.cancelAppointment.bind(this, service.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
+                                    <td>{!service.has_taken_place ? service.massage_points : null}</td>
+                                    <td>{!service.has_taken_place ? (
+                                        <button onClick={this.props.cancelAppointment.bind(this, service.id)} className="btn btn-danger btn-sm">Odwołaj</button>
+                                    ) : null}</td>
                                 </tr>
                             ))}
                         </tbody>
