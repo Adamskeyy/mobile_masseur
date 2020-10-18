@@ -7,7 +7,7 @@ from mobile_masseur import settings
 class MassageServiceSerializer(serializers.ModelSerializer):
     massage_type_name = serializers.ReadOnlyField(source='massage_type.name')
     massage_date_time_name = serializers.DateTimeField(format=settings.DATETIME_FORMAT, input_formats=None,
-                                                       source='massage_date_time.date_time')
+                                                       source='massage_date_time.date_time', required=False, read_only=True)
     massage_delivery_name = serializers.ReadOnlyField(source='massage_delivery.place')
     owner_name = serializers.ReadOnlyField(source='owner.username')
 

@@ -70,14 +70,14 @@ export const chooseAppointment = (service) => (dispatch, getState) => {
     axios.post('/api/massage/service/', service, tokenConfig(getState))
         .then(res => {
             console.log(res);
+            console.log('dupaaa, przeszło')
             dispatch(createMessage({ chooseAppointment: 'Usługa wybrana' }));
-            dispatch({
-                type: SCHEDULE_APPOINTMENT,
-                payload: res.data
-            });
+            // dispatch({
+            //     type: SCHEDULE_APPOINTMENT,
+            //     payload: res.data
+            // });
         })
         .catch(err => {
-            console.error(err);
             dispatch(returnErrors(err.response.data, err.response.status))
         });
 };
