@@ -16,6 +16,10 @@ Uwagi: {{ service.comment }}
 Adres: {{ service.address }}
 Dane kontaktowe: {{ service.owner.phone }}
 
+ {% if extra_message %}
+{{ extra_message }}
+ {% endif %}
+
 Jeżeli dane są niepoprawne prosimy o kontakt.
 
 Życzymy miłego masażu.

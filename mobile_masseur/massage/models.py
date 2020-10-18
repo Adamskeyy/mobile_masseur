@@ -9,36 +9,68 @@ from datetime import datetime
 from mobile_masseur import settings
 
 
-def cancel(instance):
+def points_status(instance):
+    extra_message = f"Aktualnie posiadasz {instance.owner.points} punktów."
+    return extra_message
+
+
+def send_email(instance, template, subject, cc, extra_message):
+    message = extra_message
     total_cost = instance.massage_type.cost + instance.massage_delivery.cost
-    template = render_to_string('cancel_email_template.html', context={
-        "service": instance, "total_cost": total_cost})
+    template = render_to_string(template, context={
+        "service": instance, "total_cost": total_cost, "extra_message": message})
 
     email = EmailMessage(
-        f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+        subject,
         template,
         settings.EMAIL_HOST_USER,
         [instance.owner.email],
-        ["slagra@o2.pl"]
+        [cc]
     )
     email.fail_silently = False
     email.send()
 
 
-def success(instance):
-    total_cost = instance.massage_type.cost + instance.massage_delivery.cost
-    template = render_to_string('email_template.html', context={
-        "service": instance, "total_cost": total_cost})
+def add_points(sender, instance, **kwargs):
+    if instance.has_taken_place:
+        this_user = User.objects.filter(username=instance.owner.username)[0]
+        this_user.points += instance.massage_type.points
+        this_user.save()
+        extra_message = ""
+        if instance.owner.points >= 100:
+            extra_message = "Zebrałeś ponad 100 pktów!!! Zadzwoń i umów się na masaż gratis!"
+            this_user = User.objects.filter(username=instance.owner.username)[0]
+            this_user.points -= 100
+            this_user.save()
+        send_email(instance=instance,
+                   template="points_added.html",
+                   subject=f"Gratulacje! Zdobyłeś {instance.massage_type.points} punktów",
+                   cc="slagra@tlen.pl",
+                   extra_message=extra_message)
 
-    email = EmailMessage(
-        f'Rezerwacja masażu {instance.massage_type.duration} min termin: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
-        template,
-        settings.EMAIL_HOST_USER,
-        [instance.owner.email],
-        ["slagra@o2.pl"],
-    )
-    email.fail_silently = False
-    email.send()
+
+
+def change_active_date(sender, instance, **kwargs):
+    if instance.created and not instance.has_taken_place:
+        instance.massage_date_time.is_active = False
+        instance.massage_date_time.save()
+        send_email(instance=instance, template='email_template.html',
+                   subject=f'Rezerwacja masażu {instance.massage_type.duration} min termin: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+                   cc="slagra@o2.pl",
+                   extra_message=points_status(instance),
+                   )
+
+
+def change_inactive_date(sender, instance, **kwargs):
+    if instance.created and not instance.has_taken_place:
+        instance.massage_date_time.is_active = True
+        instance.massage_date_time.save()
+        send_email(instance=instance,
+                   template='cancel_email_template.html',
+                   subject=f'Odwołanie masażu {instance.massage_type.duration} min w terminie: {instance.massage_date_time.date_time.strftime("%d.%m.%Y %H:%M")}',
+                   cc="slagra@o2.pl",
+                   extra_message=points_status(instance),
+                   )
 
 
 class MassageDateTime(models.Model):
@@ -81,27 +113,6 @@ class MassageType(models.Model):
         ordering = ('name',)
 
 
-def change_active_date(sender, instance, **kwargs):
-    if instance.created:
-        instance.massage_date_time.is_active = False
-        instance.massage_date_time.save()
-        success(instance)
-
-
-def add_points(sender, instance, **kwargs):
-    if instance.has_taken_place:
-        this_user = User.objects.filter(username=instance.owner.username)[0]
-        this_user.points += instance.massage_type.points
-        this_user.save()
-
-
-def change_inactive_date(sender, instance, **kwargs):
-    if instance.created:
-        instance.massage_date_time.is_active = True
-        instance.massage_date_time.save()
-        cancel(instance)
-
-
 class MassageService(models.Model):
     massage_type = models.ForeignKey(MassageType, on_delete=models.DO_NOTHING)
     massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING, unique=True)
@@ -129,6 +140,6 @@ class MassageService(models.Model):
         return f"{self.massage_type} / {self.massage_date_time} / {self.total_cost} zł {self.owner.username}"
 
 
+signals.post_save.connect(add_points, sender=MassageService)
 signals.post_save.connect(change_active_date, sender=MassageService)
 signals.post_delete.connect(change_inactive_date, sender=MassageService)
-signals.post_save.connect(add_points, sender=MassageService)

@@ -25,18 +25,19 @@ def delete_user(sender, instance, **kwargs):
 
 
 def register_user(sender, instance, **kwargs):
-    template = render_to_string('register_user.html', context={
-        "user": instance})
+    if instance.points == 0:
+        template = render_to_string('register_user.html', context={
+            "user": instance})
 
-    email = EmailMessage(
-        f'Rejestracja użytkownika {instance.username} w serwisie Mobilny Masażysta Trójmiasto',
-        template,
-        settings.EMAIL_HOST_USER,
-        [instance.email],
-        ["slagra@o2.pl"],
-    )
-    email.fail_silently = False
-    email.send()
+        email = EmailMessage(
+            f'Rejestracja użytkownika {instance.username} w serwisie Mobilny Masażysta Trójmiasto',
+            template,
+            settings.EMAIL_HOST_USER,
+            [instance.email],
+            ["slagra@o2.pl"],
+            )
+        email.fail_silently = False
+        email.send()
 
 
 class User(DjangoUser):
