@@ -36,12 +36,12 @@ export class ServiceHistory extends Component {
                             {this.props.services.map((service, index) => (
                                 <tr key={service.id}>
                                     <td>{index + 1}</td>
-                                    <td>{service.massage_type}</td>
-                                    <td>{service.massage_date_time}</td>
-                                    <td>{service.massage_delivery}</td>
+                                    <td>{service.massage_type_name}</td>
+                                    <td>{service.massage_date_time_name}</td>
+                                    <td>{service.massage_delivery_name}</td>
                                     <td>{service.address}</td>
                                     <td>{service.comment}</td>
-                                    <td>milion</td>
+                                    <td>{service.total_cost}</td>
                                     <td><button onClick={this.props.cancelAppointment.bind(this, service.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
                             ))}
