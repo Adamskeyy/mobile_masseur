@@ -17,7 +17,7 @@ class MassageServiceSerializer(serializers.ModelSerializer):
         model = MassageService
         fields = ['id', 'massage_type', 'massage_date_time', 'created', 'comment', 'massage_delivery', 'address',
                   'owner', 'total_cost', 'massage_type_name', 'massage_delivery_name', 'massage_date_time_name',
-                  'owner_name', 'massage_points']
+                  'owner_name', 'massage_points', 'has_taken_place']
 
 
 class MassageTypeSerializer(serializers.ModelSerializer):
