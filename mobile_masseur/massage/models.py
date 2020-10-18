@@ -88,6 +88,13 @@ def change_active_date(sender, instance, **kwargs):
         success(instance)
 
 
+def add_points(sender, instance, **kwargs):
+    if instance.has_taken_place:
+        this_user = User.objects.filter(username=instance.owner.username)[0]
+        this_user.points += instance.massage_type.points
+        this_user.save()
+
+
 def change_inactive_date(sender, instance, **kwargs):
     if instance.created:
         instance.massage_date_time.is_active = True
@@ -97,12 +104,13 @@ def change_inactive_date(sender, instance, **kwargs):
 
 class MassageService(models.Model):
     massage_type = models.ForeignKey(MassageType, on_delete=models.DO_NOTHING)
-    massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING)
+    massage_date_time = models.ForeignKey(MassageDateTime, on_delete=models.DO_NOTHING, unique=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     comment = models.TextField(null=True, blank=True)
     massage_delivery = models.ForeignKey(MassageDelivery, on_delete=models.DO_NOTHING)
     address = models.CharField(max_length=200, default="Gabinet Sopot Kamienny Potok")
     total_cost = models.IntegerField(default=0)
+    has_taken_place = models.BooleanField(default=False, null=True, blank=True)
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -123,3 +131,4 @@ class MassageService(models.Model):
 
 signals.post_save.connect(change_active_date, sender=MassageService)
 signals.post_delete.connect(change_inactive_date, sender=MassageService)
+signals.post_save.connect(add_points, sender=MassageService)
