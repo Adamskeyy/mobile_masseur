@@ -37,7 +37,7 @@ def add_points(sender, instance, **kwargs):
         this_user.points += instance.massage_type.points
         this_user.save()
         extra_message = ""
-        if instance.owner.points >= 100:
+        if this_user.points >= 100:
             extra_message = "Zebrałeś ponad 100 pktów!!! Zadzwoń i umów się na masaż gratis!"
             this_user = User.objects.filter(username=instance.owner.username)[0]
             this_user.points -= 100
@@ -47,7 +47,6 @@ def add_points(sender, instance, **kwargs):
                    subject=f"Gratulacje! Zdobyłeś {instance.massage_type.points} punktów",
                    cc="slagra@tlen.pl",
                    extra_message=extra_message)
-
 
 
 def change_active_date(sender, instance, **kwargs):
