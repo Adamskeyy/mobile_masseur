@@ -15,6 +15,10 @@ export class ServiceHistory extends Component {
     }
 
     render() {
+
+        // const massagePoints = this.props.services ? 
+
+
         return (
             <Fragment>
                 <h2>Historia usług</h2>
@@ -29,6 +33,7 @@ export class ServiceHistory extends Component {
                                 <th>Adres</th>
                                 <th>Dodatkowe uwagi</th>
                                 <th>Całkowity koszt</th>
+                                <th>Punkty lojalnościowe</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -42,6 +47,7 @@ export class ServiceHistory extends Component {
                                     <td>{service.address}</td>
                                     <td>{service.comment}</td>
                                     <td>{service.total_cost}</td>
+                                    {/* {massagePoints} */}
                                     <td><button onClick={this.props.cancelAppointment.bind(this, service.id)} className="btn btn-danger btn-sm">Odwołaj</button></td>
                                 </tr>
                             ))}
